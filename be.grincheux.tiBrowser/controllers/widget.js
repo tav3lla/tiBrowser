@@ -21,6 +21,7 @@ if (typeof args.tintColor != "undefined" && args.tintColor != "") {
 }
 if (typeof args.toolbarTintColor != "undefined" && args.toolbarTintColor != "") setToolbarTintColor(args.toolbarTintColor);
 if (typeof args.autoOpen != "undefined" && args.autoOpen) open();
+if (typeof args.zoom != "undefined" && !args.zoom) { $.webView.enableZoomControls = false; Ti.API.log('zoom false'); }
 
 // History & Navigation handler
 function pageLoaded() {
@@ -33,6 +34,7 @@ function doLoaded() {
 	}
 	if (browsing_direction == ""
 	&& $.webView.url != history[history_position]
+	&& $.webView.evalJS("document.querySelector('body').innerHTML")	
 	&& $.webView.evalJS("document.querySelector('body').innerHTML").length) { // Update history only if a link has been clicked, not on back, previous or refresh action.
 		history_position++;
 		history.length = history_position; // Trim the array because a new link cancels all following history.
